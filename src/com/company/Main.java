@@ -1,14 +1,28 @@
 package com.company;
 
+import com.company.helper.DBHandler;
+
 import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class Main {
+    static private DBHandler dbHandler;
+    static private Connection connection;
+    static private PreparedStatement preparedStatement;
 
     public static void main(String[] args) throws SQLException {
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/concordia_login", "root", "");
+        dbHandler = new DBHandler();
+        connection = dbHandler.getDbConnection();
 
-        System.out.println("Connected to the database: " + connection.getCatalog());
+        String insertQuery = "INSERT INTO users(firstname,lastname,username,password) VALUES(?,?,?,?)";
+
+        preparedStatement = connection.prepareStatement(insertQuery);
+        preparedStatement.setString(1, "Pranav");
+        preparedStatement.setString(2, "Bhatia");
+        preparedStatement.setString(3, "pb");
+        preparedStatement.setString(4, "secret");
+
+        preparedStatement.executeUpdate();
     }
 }
