@@ -17,7 +17,8 @@ public class Main {
         connection = dbHandler.getDbConnection();
 
 //        writeToDB();
-        readFromDB();
+//        readFromDB();
+        updateDB("Cristiano", "Rolando", "cr", "secret", 5);
     }
 
 
@@ -41,5 +42,20 @@ public class Main {
         preparedStatement.setString(4, "secret");
 
         preparedStatement.executeUpdate();
+        preparedStatement.close();
+    }
+
+    public static void updateDB(String firstName, String lastName, String username, String password, int id) throws SQLException {
+        String query = "UPDATE users SET firstname = ?, lastname = ?, username = ?, password = ? WHERE id = ?";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, firstName);
+        preparedStatement.setString(2, lastName);
+        preparedStatement.setString(3, username);
+        preparedStatement.setString(4, password);
+        preparedStatement.setInt(5, id);
+
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
     }
 }
