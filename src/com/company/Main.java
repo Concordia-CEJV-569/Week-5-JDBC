@@ -18,7 +18,9 @@ public class Main {
 
 //        writeToDB();
 //        readFromDB();
-        updateDB("Cristiano", "Rolando", "cr", "secret", 5);
+//        updateDB("Cristiano", "Rolando", "cr", "secret", 5);
+
+//        deleteFromDB(6);
     }
 
 
@@ -56,6 +58,16 @@ public class Main {
         preparedStatement.setInt(5, id);
 
         preparedStatement.executeUpdate();
+        preparedStatement.close();
+    }
+
+    public static void deleteFromDB(int id) throws SQLException {
+        String query = "DELETE from users WHERE id = ?";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, id);
+
+        preparedStatement.execute();
         preparedStatement.close();
     }
 }
